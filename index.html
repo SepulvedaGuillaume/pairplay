@@ -1,13 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="style.css" />
     <title>Document</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Fair Play</h1>
+    <div id="modal-start">
+      <div class="modal-content">
+        <p id="player-name-error" style="display: none">
+          Please enter a name to start the game
+        </p>
+        <input type="text" id="player-name" placeholder="Enter your name" />
+        <button id="start-game">Start</button>
+      </div>
+    </div>
+    <div id="game-container" style="display: none">
+      <p>Jeu</p>
+      <!-- to TODO -->
+      <button id="end-game">Fin du jeu</button>
+    </div>
+    <div id="modal-end" style="display: none">
+      <div class="modal-content">
+        <!-- Create element at the end of the game here in JS -->
+        <h2>Congratulations joueur</h2>
+        <p id="player-score">Score : 500</p>
+        <button id="play-again">Play again</button>
+      </div>
+    </div>
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
