@@ -95,6 +95,32 @@ h2 {
   color: var(--color-tertiary);
 }
 
+.topics {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 20px;
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+.topics label {
+  margin-right: 10px;
+  font-size: 14px;
+}
+
+#topics-select {
+  width: 100%;
+  padding: 12px;
+  margin: 10px 0;
+  background-color: var(--color-tertiary);
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
 #player-name-error {
   color: red;
   font-size: 0.8em;
