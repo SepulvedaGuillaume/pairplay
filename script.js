@@ -9,7 +9,6 @@ const playerNameError = document.querySelector("#player-name-error");
 const gameContainer = document.querySelector("#game-container");
 const modalEnd = document.querySelector("#modal-end");
 const playAgainButton = document.querySelector("#play-again");
-const endGameButton = document.querySelector("#end-game");
 
 const playerName = localStorage.getItem("playerName");
 if (playerName) {
@@ -36,11 +35,6 @@ function startGame() {
     playerNameError.style.display = "block";
   }
 }
-
-endGameButton.addEventListener("click", () => {
-  gameContainer.style.display = "none";
-  modalEnd.style.display = "flex";
-});
 
 playAgainButton.addEventListener("click", () => {
   modalEnd.style.display = "none";
@@ -73,8 +67,8 @@ combinedCards.forEach((card, index) => {
     container.appendChild(cardElement);
 });
 
-// Append the container to the body
-document.body.appendChild(container);
+// Append the container to game-container
+gameContainer.appendChild(container);
 
 
 // Function to flip all the cards after 3 seconds
