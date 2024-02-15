@@ -36,7 +36,7 @@ function flipAllCards() {
         cards.forEach(card => {
             card.classList.toggle('flipped');
         });
-    }, 3000); // 2000ms = 2 seconds
+    }, 2000); // 2000ms = 2 seconds
 }
 
 // Call the flipAllCards function after the DOM content has loaded
