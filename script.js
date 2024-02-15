@@ -9,6 +9,13 @@ const playerNameError = document.querySelector("#player-name-error");
 const gameContainer = document.querySelector("#game-container");
 const modalEnd = document.querySelector("#modal-end");
 const playAgainButton = document.querySelector("#play-again");
+const scoreBoard = document.getElementById('scoreboard')
+let playerMoves = 0;
+let playerMatches = 0;
+let firstCard = null;
+let secondCard = null;
+let score = 0;
+let consecutiveMatches = 0;
 
 const playerName = localStorage.getItem("playerName");
 if (playerName) {
@@ -34,6 +41,12 @@ function startGame() {
   } else {
     playerNameError.style.display = "block";
   }
+
+  playerMoves = 0;
+  playerMatches = 0;
+  firstCard = null;
+  secondCard = null;
+  updateScoreBoard();
 }
 
 playAgainButton.addEventListener("click", () => {
@@ -95,3 +108,43 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 console.log(cards);
+
+function checkMatch() {
+    if (firstCard.textContent === secondCard.textContent){
+        playerMatches++
+        score += 10;
+        consecutiveMatches++
+        firstCard = null
+        secondCard = null
+
+    }if (consecutiveMatches >= 2){
+        score += 5;
+
+    }if (!firstCard.textContent === !secondCard.textContent){
+      consecutiveMatches = 0;
+
+    }if (playerMatches === 8) {
+        endgame("a faire") 
+
+    } else {
+        firstCard.textContent = '';
+        secondCard.textContent='';
+        firstCard = null
+        secondCard = null
+    }
+
+
+}
+
+function endgame() {
+    scoreBoard.innerHTML += `<p>Bravo ${playerName}! Vous avez gagné. </p>`
+}
+
+
+function updateScoreBoard() {
+    scoreBoard.innerHTML = `</br><p>Mouvement: ${playerMoves}</p>
+    <p>Correspondances: ${playerMatches}</p>
+    <p>Score: ${playerMatches}</p>`
+}
+
+
