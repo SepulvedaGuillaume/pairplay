@@ -26,8 +26,12 @@ function initializeGame() {
   elements.topicSelected.addEventListener("keyup", handlePlayerNameInputKeyup);
 
   const playerName = localStorage.getItem(localStorageKey);
+  const topicSelected = localStorage.getItem("topicSelected");
   if (playerName) {
     elements.playerNameInput.value = playerName;
+  }
+  if (topicSelected) {
+    elements.topicSelected.value = topicSelected;
   }
 
   elements.playAgainButton.addEventListener(
@@ -37,22 +41,24 @@ function initializeGame() {
 }
 
 function handleStartButtonClick() {
-  startGame();
   createCardElements();
+  startGame();
 }
 
 function handlePlayerNameInputKeyup(e) {
   if (e.key === "Enter") {
-    startGame();
     createCardElements();
+    startGame();
   }
 }
 
 function startGame() {
   const playerName = elements.playerNameInput.value.trim();
+  const topicSelected = elements.topicSelected.value;
 
   if (playerName) {
     localStorage.setItem(localStorageKey, playerName);
+    localStorage.setItem("topicSelected", topicSelected);
     elements.modalStart.style.display = "none";
     elements.playerNameError.style.display = "none";
     elements.gameContainer.style.display = "flex";
