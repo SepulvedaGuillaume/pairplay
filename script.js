@@ -1,18 +1,16 @@
-window.onload = () => {
-  document.querySelector("#player-name").focus();
-};
-
 // DOM elements
-const playerNameInput = document.querySelector("#player-name");
-const startGameButton = document.querySelector("#start-game");
-const modalStart = document.querySelector("#modal-start");
-const playerNameError = document.querySelector("#player-name-error");
-const gameContainer = document.querySelector("#game-container");
-const modalEnd = document.querySelector("#modal-end");
-const playAgainButton = document.querySelector("#play-again");
-const scoreBoard = document.getElementById("scoreboard");
-const playerScore = document.getElementById("player-score");
-const topicSelected = document.querySelector("#topics-select");
+const elements = {
+  playerNameInput: document.querySelector("#player-name"),
+  startGameButton: document.querySelector("#start-game"),
+  modalStart: document.querySelector("#modal-start"),
+  playerNameError: document.querySelector("#player-name-error"),
+  gameContainer: document.querySelector("#game-container"),
+  modalEnd: document.querySelector("#modal-end"),
+  playAgainButton: document.querySelector("#play-again"),
+  topicSelected: document.querySelector("#topics-select"),
+  scoreBoard: document.querySelector("#scoreboard"),
+  playerScore: document.querySelector("#player-score")
+};
 
 // game variables
 let playerMoves = 0;
@@ -27,63 +25,73 @@ const clientId = "bfdH9o6tt3oLJSqx04FZILvH3vS0WJQKCmIqJXbxdgo";
 const UNSPLASH_ROOT = "https://api.unsplash.com";
 const countCards = 8;
 
+// focus input field on load
+window.onload = () => {
+  elements.playerNameInput.focus();
+};
+
 // Get the player name and the topic from local storage
 const playerName = localStorage.getItem("playerName");
 if (playerName) {
-  playerNameInput.value = playerName;
+  elements.playerNameInput.value = playerName;
 }
 const topic = localStorage.getItem("topicSelected");
 if (topic) {
-  topicSelected.value = topic;
+  elements.topicSelected.value = topic;
 }
 
-startGameButton.addEventListener("click", () => {
+// start events
+elements.startGameButton.addEventListener("click", () => {
   createCardElements();
   startGame();
 });
 
-function isEnterPressed(e) {
+const isEnterPressed = (e) => {
   if (e.key === "Enter") {
     createCardElements();
     startGame();
   }
 }
 
-playerNameInput.addEventListener("keyup", (e) => {
+elements.playerNameInput.addEventListener("keyup", (e) => {
   isEnterPressed(e);
 });
 
-topicSelected.addEventListener("keyup", (e) => {
+elements.topicSelected.addEventListener("keyup", (e) => {
   isEnterPressed(e);
 });
 
-function startGame() {
-  const playerName = playerNameInput.value.trim();
-  const topic = topicSelected.value;
+const startGame = () => {
+  const playerName = elements.playerNameInput.value.trim();
+  const topic = elements.topicSelected.value;
 
   if (playerName) {
     localStorage.setItem("playerName", playerName);
     localStorage.setItem("topicSelected", topic);
     updateScoreBoard();
-    modalStart.style.display = "none";
-    playerNameError.style.display = "none";
-    gameContainer.style.display = "flex";
-    scoreboard.style.display = "block";
+    elements.modalStart.style.display = "none";
+    elements.playerNameError.style.display = "none";
+    elements.gameContainer.style.display = "flex";
+    elements.scoreBoard.style.display = "block";
     flipAllCards();
   } else {
-    playerNameError.style.display = "block";
+    elements.playerNameError.style.display = "block";
   }
 }
 
-playAgainButton.addEventListener("click", () => {
-  modalEnd.style.display = "none";
-  modalStart.style.display = "flex";
-  document.querySelector("#player-name").focus();
+
+// play again event
+elements.playAgainButton.addEventListener("click", () => {
+  elements.modalEnd.style.display = "none";
+  elements.modalStart.style.display = "flex";
+  elements.playerNameInput.focus();
 });
 
-async function createCardElements() {
+
+// Function to create the card elements
+const createCardElements = async() => {
   try {
-    const unsplashResults = await fetchResults(topicSelected.value);
+    const unsplashResults = await fetchResults(elements.topicSelected.value);
     const randomImages = unsplashResults.slice(0, countCards * 2);
 
     const combinedCards = [...randomImages, ...randomImages];
@@ -103,7 +111,7 @@ async function createCardElements() {
       container.appendChild(cardElement);
     });
 
-    gameContainer.appendChild(container);
+    elements.gameContainer.appendChild(container);
     flipAllCards();
     addCardClickListeners();
   } catch (err) {
@@ -112,8 +120,8 @@ async function createCardElements() {
   }
 }
 
-// Function to flip all the cards after 3 seconds
-function flipAllCards() {
+// Function to flip all the cards after 3 seconds and get the first and second cards to compare
+const flipAllCards = () => {
   const cards = document.querySelectorAll(".card");
   setTimeout(() => {
     cards.forEach((card) => {
@@ -135,9 +143,8 @@ function flipAllCards() {
   }, 2000); // 2000ms = 2 seconds
 }
 
-const cardsSelected = document.querySelectorAll(".card");
-
-function addCardClickListeners() {
+// Function to add click listeners to the cards
+const addCardClickListeners = () => {
   const cards = document.querySelectorAll(".card");
   cards.forEach((card) => {
     card.addEventListener("click", () => {
@@ -146,7 +153,8 @@ function addCardClickListeners() {
   });
 }
 
-function checkMatch() {
+// Function to check if the cards match
+const checkMatch = () => {
   if (
     firstCard?.querySelector("img")?.src ===
     secondCard?.querySelector("img")?.src
@@ -176,24 +184,26 @@ function checkMatch() {
   }
   if (playerMatches === 8) {
     setTimeout(() => {
-      playerScore.innerHTML = `Score: ${score}`;
+      elements.playerScore.innerHTML = `Score: ${score}`;
       playerMatches = 0;
       score = 0;
       consecutiveMatches = 0;
       playerMoves = 0;
-      cardsSelected.forEach((card) => {
+      const cards = document.querySelectorAll(".card");
+      cards.forEach((card) => {
         card.style.pointerEvents = "auto";
       });
       firstCard = null;
       secondCard = null;
-      gameContainer.style.display = "none";
-      scoreBoard.style.display = "none";
-      modalEnd.style.display = "flex";
+      elements.gameContainer.style.display = "none";
+      elements.scoreBoard.style.display = "none";
+      elements.modalEnd.style.display = "flex";
     }, 500);
   }
 }
 
-function updateScoreBoard() {
+// Function to update the score board
+const updateScoreBoard = () => {
   let bestPlayer =
     localStorage.getItem("bestPlayerName") || "No best player yet";
   let bestPlayerScore = parseInt(localStorage.getItem("bestPlayerScore")) || 0;
@@ -204,16 +214,17 @@ function updateScoreBoard() {
     localStorage.setItem("bestPlayerScore", score);
   }
 
-  scoreBoard.innerHTML = `<br><p>Mouvement: ${playerMoves}</p> 
-    <p>Correspondances: ${playerMatches}</p>
+  elements.scoreBoard.innerHTML = `<br><p>Movements: ${playerMoves}</p> 
+    <p>Matches: ${playerMatches}</p>
     <p>Score: ${score}</p>`;
 
   if (bestPlayer && bestPlayerScore) {
-    scoreBoard.innerHTML += `<p>Meilleur score: <br>Par : ${bestPlayer} <br> Score : ${bestPlayerScore}</p>`;
+    elements.scoreBoard.innerHTML += `<p><u>Best score</u><br>By : ${bestPlayer} <br> Score : ${bestPlayerScore}</p>`;
   }
 }
 
-async function searchUnsplash(searchQuery) {
+// Function to search Unsplash for images
+const searchUnsplash = async(searchQuery) => {
   let endpoint;
   searchQuery === 'random' ? endpoint = `${UNSPLASH_ROOT}/photos/random?query='${searchQuery}&client_id=${clientId}&count=${countCards}` : endpoint = `${UNSPLASH_ROOT}/photos/random?query='${searchQuery}&client_id=${clientId}&count=${countCards}`;
   
@@ -227,7 +238,8 @@ async function searchUnsplash(searchQuery) {
   return json;
 }
 
-async function fetchResults(searchQuery) {
+// Function to fetch the results from Unsplash
+const fetchResults = async(searchQuery) => {
   try {
     const results = await searchUnsplash(searchQuery);
     return results.map((result) => result.urls.regular);
