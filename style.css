@@ -21,7 +21,7 @@ body {
   text-align: center;
   margin-top: 20px;
   padding-top: 0;
-  color: red;
+  color: var(--color-tertiary);
 }
 
 h2 {
