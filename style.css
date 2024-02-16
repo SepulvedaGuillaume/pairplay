@@ -154,8 +154,8 @@ h2 {
 }
 
 .card {
-  width: 170px;
-  height: 170px;
+  width: 130px;
+  height: 130px;
   background-color: lightpink; /* Light pink color for the back of the card */
   transform-style: preserve-3d;
   transition: transform 0.5s;
