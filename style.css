@@ -183,5 +183,43 @@ h2 {
 #scoreboard p {
   margin: 20;
   font-size: 1.5em;
+}
 
+@media screen and (max-width: 992px){
+  .card{
+    width: 65px;
+    height: 65px;
+  }
+
+  #scoreboard {
+    top: 15%;
+  }
+  
+  #scoreboard p {
+    font-size: 1.3em;
+  }
+
+  .container {
+    top: 55%;
+  }
+}
+
+
+@media screen and (max-width: 576px){
+  .card{
+    width: 80px;
+    height: 80px;
+  }
+
+  #scoreboard {
+    top: 5%;
+  }
+  
+  #scoreboard p {
+    font-size: 1.2em;
+  }
+
+  .container {
+    top: 60%;
+  }
 }
