@@ -77,7 +77,7 @@ h2 {
   color: var(--color-tertiary);
 }
 
-#start-game {
+#start-game, #play-again {
   width: 100%;
   background-color: var(--color-tertiary);
   color: var(--color-primary);
@@ -90,7 +90,7 @@ h2 {
   transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-#start-game:hover {
+#start-game:hover, #play-again:hover {
   background-color: var(--color-primary);
   color: var(--color-tertiary);
 }
@@ -124,6 +124,7 @@ h2 {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 5px;
+  background-color: var(--color-primary);
 }
 
 .card {
@@ -143,4 +144,18 @@ h2 {
 
 .card.flipped {
   transform: rotateY(180deg);
+}
+
+#scoreboard {
+  position: absolute;
+  top: 20%;
+  left: 0;
+  padding: 20px;
+  color: var(--color-tertiary);
+}
+
+#scoreboard p {
+  margin: 20;
+  font-size: 1.5em;
+
 }
